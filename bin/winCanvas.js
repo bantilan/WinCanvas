@@ -1,3 +1,4 @@
+/* Create the object */
 function Shape(o){
 	this.img = o.img;
 	this.w = o.w;
@@ -46,6 +47,7 @@ function Shape(o){
 
 	}
 }
+/*Create the scrollable Text on the Canvas */
 Shape.prototype.multiText = function(){
 	this.scrollStart = false;
 	this.sy = 100;
@@ -71,7 +73,6 @@ Shape.prototype.multiText = function(){
 	this.enterFrameScroll = function(){
 		this.touchTime++;
 
-		
 		if(this.img.maxHeight>this.h && this.adjustvisible==true && this.adjustw+this.adjustx>=0){
 			this.root.ctx.beginPath();
 			this.root.ctx.lineWidth = 6;
@@ -94,15 +95,8 @@ Shape.prototype.multiText = function(){
 				scrollYPercent = 100;
 			}
 			
-			
-			
-			
-			//document.getElementById("trace").innerHTML = scrollYPercent;
-			
 			scrollSize = this.adjusth*(scrollSizePercent/100);
 			scrollY = this.adjusth*(scrollYPercent/100);
-			
-			
 			
 			this.root.ctx.moveTo(this.adjustx+this.adjustw+6,this.adjusty+scrollY); // line 1
 			this.root.ctx.lineTo(this.adjustx+this.adjustw+6,this.adjusty+scrollY+(scrollSize)); // line 1
@@ -163,6 +157,7 @@ Shape.prototype.multiText = function(){
 		this.scrollStart = false;
 	}
 }
+/* Function for playing specific frame from sprite */
 Shape.prototype.gotoAndPlay = function(frame){
 	this.stat = "play";
 	this.f = 0;
@@ -180,6 +175,7 @@ Shape.prototype.gotoAndPlay = function(frame){
 	}
 	this.currentFrame = frame;
 }
+/* Function for jumping to specific frame from sprite */
 Shape.prototype.gotoAndStop = function(frame){
 	this.stat = "stop";
 	this.f = 0;
@@ -197,42 +193,55 @@ Shape.prototype.gotoAndStop = function(frame){
 	}
 	this.currentFrame = frame;
 }
+/* Play the object from the current frame */
 Shape.prototype.play = function(callback){
 	this.stat = "play";
 }
+/* Stop the object from the current frame */
 Shape.prototype.stop = function(callback){
 	this.stat = "stop";
 }
+/* When user click the object, it started to Drag and follow the mouse cursor */
 Shape.prototype.startDrag = function(callback){
 	this.draggable=true;
 }
+/* Stop Dragging object when mouse release */
 Shape.prototype.stopDrag = function(callback){
 	this.draggable=false;
 }
+/* Function when mouse is press in the object */
 Shape.prototype.onClick = function(callback){
 	this.clickCallback = callback;
 }
+/* Function when mouse is release in the object */
 Shape.prototype.onRelease = function(callback){
 	this.releaseCallback = callback;
 }
+/* Function when mouse is rollover in the object */
 Shape.prototype.onRollOver = function(callback){
 	this.overCallback = callback;
 }
+/* Function when mouse is rollout in the object */
 Shape.prototype.onRollOut = function(callback){
 	this.outCallback = callback;
 }
+/* Always play this function when the object is alive */
 Shape.prototype.onEnterFrame = function(callback){
 	this.frameCallback = callback;
 }
+/* Remove the object */
 Shape.prototype.removeMovieClip = function(callback){
 	this.deleteClip = true;	
 }
+/* Remove the onEnterFrame Function */
 Shape.prototype.removeEnterFrame = function(callback){
 	this.frameCallback = undefined;
 }
+/* Set the Depth of the object */
 Shape.prototype.setDepth = function(val){
 	this.depth = val;
 }
+/* Add an object in a object */
 Shape.prototype.addChild = function(a){
 	var myState = this.root;
 	a.parent = this;
@@ -243,6 +252,7 @@ Shape.prototype.addChild = function(a){
 	myState.img[myState.img.length-1].alpha = 100;
 	myState.valid = false;
 }
+/* Animate an object to X and Y destination */
 Shape.prototype.animate = function(type,x1,x2,friction,callback){
 	this[type+"init"] = false;
 	this[type+"velocity"] = 0;
@@ -285,6 +295,7 @@ Shape.prototype.animate = function(type,x1,x2,friction,callback){
 		}
 	}
 }
+/* When the object collision each other */
 function hitTest(obj1,obj2){
 	
 	adjustx = (obj1.parent==undefined) ? obj1.x : obj1.adjustx;
@@ -311,7 +322,7 @@ function hitTest(obj1,obj2){
 	/*return  (adjustx + parentx <= obj2.x) && (adjustx + adjustxscale + parentx >= obj2.x) &&
 	  (adjusty + parenty <= obj2.y) && (adjusty + parenty + adjustyscale >= obj2.y);	*/
 }	
-
+/* Initialize the Canvas */
 function movieCanvas(canvas){
 	
 	var myState = this;
