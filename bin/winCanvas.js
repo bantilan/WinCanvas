@@ -60,14 +60,12 @@ Shape.prototype.multiText = function(){
 	this.scrollDrag = false;
 	this.touchTime = 0;
 
-	//alert(this.img);
 	this.clickCallback = function(){
 		this.touchTime = 0;
 		this.scrollStart = true;
 		this.scrollOldY = this.mouseY;
 		this.scrollDrag = true;
 		this.scrollOldSy = this.sy;
-		//alert(this.h+":"+this.img.maxHeight);	
 	}
 	
 	this.enterFrameScroll = function(){
@@ -130,7 +128,6 @@ Shape.prototype.multiText = function(){
 						if(newSy<100){
 							this.sy = 100;	
 						}
-						//alert(this.w-100);
 						if(newSy>=this.img.maxHeight-(this.h-110)){
 							this.scrollAcc = 0;
 							this.sy = this.img.maxHeight-(this.h-110);
@@ -138,12 +135,8 @@ Shape.prototype.multiText = function(){
 						}
 						this.scrollAcc = this.scrollAcc;
 						this.scrollAcc *= 0.98;
-						//this.sy += this.scrollAcc;	
-						
 					}
-				
 				}
-				
 			}
 		}else{
 			this.sy = 100;	
@@ -303,24 +296,11 @@ function hitTest(obj1,obj2){
 	adjustxscale = (obj1.parent==undefined) ? ((obj1.xscale*obj1.w)/100) : obj1.adjustw;
 	adjustyscale = (obj1.parent==undefined) ? ((obj1.yscale*obj1.h)/100) : obj1.adjusth;
 	
-	
-	
 	return  (adjustx <= obj2.x) && (adjustx + adjustxscale >= obj2.x) &&
 	  (adjusty <= obj2.y) && (adjusty + adjustyscale >= obj2.y);	
 	
-	/*
-	adjustx = obj1.adjustx;
-	adjusty = obj1.adjusty;
-	adjustw = obj1.adjustw;
-	adjusth = obj1.adjusth;
-	*/
-	//alert(obj1.parent);
 	return  (adjustx <= obj2.x) && (adjustx + adjusth >= obj2.x) &&
 	  (adjusty <= obj2.y) && (adjusty + adjusth >= obj2.y);	
-	
-	
-	/*return  (adjustx + parentx <= obj2.x) && (adjustx + adjustxscale + parentx >= obj2.x) &&
-	  (adjusty + parenty <= obj2.y) && (adjusty + parenty + adjustyscale >= obj2.y);	*/
 }	
 /* Initialize the Canvas */
 function movieCanvas(canvas){
@@ -381,7 +361,6 @@ function movieCanvas(canvas){
 			
 			myState.img.sort(function(a, b){return a.depth-b.depth});
 			
-			//document.getElementById("trace").innerHTML = "";
 			for(var i=0;i<myState.img.length;i++){
 				// just to refresh our depth
 				if(myState.img[i].deleteClip==true){
@@ -404,8 +383,6 @@ function movieCanvas(canvas){
 				
 				if(img.stat=="play" && img.img!=null){
 					img.currentFrame = Math.floor(((img.fy+1)*(img.img.width/img.w))-(img.img.width/img.w)+(img.fx+1));
-					
-					//document.getElementById("trace").innerHTML += "fx="+img.fx+" | fy="+img.fy+" | x="+img.x+" | y="+img.y+" | f="+img.f+" | maxFrame="+img.maxFrame+" | currentFrame="+img.currentFrame+"<br/>";
 					img.f++;
 					img.sx = img.w*img.fx;
 					img.sy = img.h*img.fy;
@@ -423,16 +400,10 @@ function movieCanvas(canvas){
 					
 
 				}else if(this.stat=="stop"){
-					//img.f=1;
-					//img.sx = img.w*img.fx;
-					//img.sy = img.h*img.fy;
-					//img.sx = 0;
-					//img.sy = 0;
+					// Do nothing
 				}else{
 					
 				}
-
-				//alpha = (img.parent==undefined) ? img.alpha/100 : (img.alpha/(100/img.parent.alpha))/100;
 				
 				if(img.frameCallback!=null){
 					img.frameCallback();
@@ -480,10 +451,8 @@ function movieCanvas(canvas){
 				
 				yscale = (img.yscale*img.h)/100;
 				xscale = (img.xscale*img.w)/100;
-				//img.xscaleadjust = xscale;
-				//img.yscaleadjust = yscale;
+
 				//Let's set Default Values, If Object is NULL..
-				
 				if(img.w==undefined && img.img!=null) img.w = img.img.width;
 				if(img.h==undefined && img.img!=null) img.h = img.img.height;
 
@@ -518,20 +487,11 @@ function movieCanvas(canvas){
 						
 						totalobject++;
 					}
-					//boxLogo.x;
-
-					//thisobject.x = totalx;
-					//totalx += thisobject.x;
-					
-					//alert(totalx);
 					
 					drawx = totalx;
 					drawy = totaly;
 					visible = totalvisible;
 					alpha = totalalpha/100;
-					//drawx = (totalx/(100/totalxscale));
-					
-					//drawx = totalx/totalobject;
 					yscale = (totalyscale*img.h)/100;
 					xscale = (totalxscale*img.w)/100;
 					
@@ -545,7 +505,6 @@ function movieCanvas(canvas){
 				img.adjustx = drawx;
 				img.adjusth = yscale;
 				img.adjustw = xscale;
-				//alert(drawx);
 				myState.ctx.globalAlpha = alpha;
 				
 
@@ -554,108 +513,45 @@ function movieCanvas(canvas){
 
 					myState.img[i].multiText();
 					myState.img[i].img = myState.multiFillText(img.text, img.x, img.y,img.lineHeight,img.w,img.fontSize,img.font,img.color,img.align,img.h,img.autoFit,img.valign,img.shadowColor,img.shadowOffsetX,img.shadowOffsetY,img.shadowBlur);
-					//alert(img.text+":"+img.shadowColor);
-					//myState.img[i].img = myState.drawRect(200, 200, 20, 20, '#ffffff', '#ffffff')
 					myState.img[i].text = undefined;
-					//alert(myState.img[i].h);
-					//myState.ctx.fillText(img.text, img.x, img.y);
-					//alert(myState.img[i].img);
 				}else{
-					
-					//if(myState.linkCreate.length!=0){
-					
-						for(var lb=0;lb<myState.linkCreate.length;lb++){
-							//alert(img.img ==myState.linkCreate[lb].img);
-							if(img.img==myState.linkCreate[lb].img){
-								
-								
-								//alert(myState.linkCreate[ll].img);
-								//alert(myState.linkCreate[ll].w);
-								//alert(myState.linkList[0].href);
-								//var hrefStr = myState.linkList[0].href;
-								//myState.linkList = [];
-								
-								myState.linkList.push("bb");
-								lw = myState.linkCreate[lb].w;
-								lx = myState.linkCreate[lb].x;
-								li = myState.linkList.length-1;
-								//alert(img.y);
-								//linkList.push(1); width, height, radius, size, fill, stroke, alpha
-								img.parent.addChild(myState.linkList[li] = new Shape({img:myState.drawLink(lw,20,0,1,'#293f07', '#293f07'),w:720,h:20,x:img.x+lx,y:img.y,stat:"stop"}));
-								//img.parent.addChild(myState.linkList[li] = new Shape({img:myState.drawRect(20,20,20,10,'#ffffff', '#ffffff'),w:720,h:20,x:20,y:20,stat:"stop"}));
-								myState.linkList[li].ly = myState.linkCreate[lb].y;
-								myState.linkList[li].whoImg = img;
-								myState.linkList[li].alpha = 0;
-								myState.linkList[li].myImg = myState.linkCreate[lb].img;
-								//myState.linkList[li].id = myState.img.length;
-								//eeCCBB.href = hrefStr;
-								//alert(22);
-								myState.linkList[li].onClick(function(){
-									
-								});
-								//alert(li);
-								myState.linkList[li].root = myState;
-								myState.linkList[li].type = "link";
-								myState.linkList[li].href = myState.linkCreate[lb].href;
-								myState.linkList[li].target = myState.linkCreate[lb].target;
-								myState.linkList[li].conn = myState.linkCreate[lb].conn;
-								//myState.linkList[li].linkCom = [];
-								//alert(myState.linkCreate[lb].href);
-								/*
-								fCom = lb+1;
-								try{
-									// Let's find checks if links on the next line are connected to this link...
-									while(myState.linkCreate[fCom].conn == myState.linkCreate[lb].conn){
-										myState.linkList[fCom].linkCom.push(myState.linkCreate[fCom]);
-										myState.linkList[li].linkCom.push(myState.linkCreate[fCom]);
-										//alert("FOUND");
-										fCom++;
-									}
-								}catch(e){}
-								*/
-
-								
-								//myState.linkList[li].depth = (img.depth+1);
-								myState.linkList[li].onEnterFrame(function(){
-									//document.getElementById("trace").innerHTML += this.depth+"<br/>";
-									if(this.myImg!=this.whoImg.img){
-										//this.root.img.splice(this.id,1);
-										//this.visible=false; // temporary not visible.. Need to edit.. we need to remove those resources..
-										this.removeMovieClip();
-										//this.removeEnterFrame();
-									}
-									//alert(1);
-									//this.root.img.splice(this.id,1);
-									//this.removeEnterFrame();
-									
-							//	alert(this.whoImg.sy);
-									//document.getElementById("trace").innerHTML = this.ly+"<br/>"+this.whoImg.sy+"<br/>"+this.parent.y+"<br/>"+this.whoImg.y;
-									this.y = this.whoImg.y+this.ly-(this.whoImg.sy-100)+3;
-									//this.y = -((this.whoImg.sy-180-this.ly-this.whoImg.y));
-									//this.alpha = this.whoImg.alpha;
-									//this.visible = this.whoImg.visible;
-								});
-								
-								//myState.linkCreate[ll].img = null;
-								//
-								//width, height, radius, size, fill, stroke, alpha);
-								//myState.img.push(myState.drawRect(200, 200, 20, 20, '#ffffff', '#ffffff',1));
-								//if(lb==myState.linkCreate.length) myState.linkCreate = [];
-								
-								//img.parent.alpha = 50;
-								//alert(lb+":"+myState.linkCreate.length);
-								myState.linkCreate.splice(lb,1);
-							}//myState.img.push(myState.drawRect(200, 200, 20, 20, '#ffffff', '#ffffff'));
+					for(var lb=0;lb<myState.linkCreate.length;lb++){
+						if(img.img==myState.linkCreate[lb].img){
 							
-						}
-						//if(foundLink==true){
-							///myState.linkCreate = [];
-						//}
-						
-						//
-						//..alert(myState.linkList[0]);	
-					//}
-					
+							myState.linkList.push("bb");
+							lw = myState.linkCreate[lb].w;
+							lx = myState.linkCreate[lb].x;
+							li = myState.linkList.length-1;
+
+							img.parent.addChild(myState.linkList[li] = new Shape({img:myState.drawLink(lw,20,0,1,'#293f07', '#293f07'),w:720,h:20,x:img.x+lx,y:img.y,stat:"stop"}));
+
+							myState.linkList[li].ly = myState.linkCreate[lb].y;
+							myState.linkList[li].whoImg = img;
+							myState.linkList[li].alpha = 0;
+							myState.linkList[li].myImg = myState.linkCreate[lb].img;
+
+							myState.linkList[li].onClick(function(){
+								
+							});
+
+							myState.linkList[li].root = myState;
+							myState.linkList[li].type = "link";
+							myState.linkList[li].href = myState.linkCreate[lb].href;
+							myState.linkList[li].target = myState.linkCreate[lb].target;
+							myState.linkList[li].conn = myState.linkCreate[lb].conn;
+
+							myState.linkList[li].onEnterFrame(function(){
+								if(this.myImg!=this.whoImg.img){
+									this.removeMovieClip();
+								}
+								this.y = this.whoImg.y+this.ly-(this.whoImg.sy-100)+3;
+
+							});
+							
+							myState.linkCreate.splice(lb,1);
+						}						
+					}
+
 					if(img.img==undefined || img.img==null || visible==false || img.visible==false){
 						
 					}else{
@@ -670,12 +566,8 @@ function movieCanvas(canvas){
 								img.releaseCallback = undefined;
 							}
 						}
-						//alert(img.h);
 						myState.ctx.drawImage(img.img,img.sx, img.sy, img.w, img.h, drawx, drawy, xscale, yscale);
-						//myState.ctx.drawImage(img.img,img.sx, img.sy, img.w, img.h, img.x, img.y, img.w, img.h);
-
 					}
-
 				}
 				// To fixed Delay Problem
 				if(img.animateScroll!=null){
@@ -687,15 +579,8 @@ function movieCanvas(canvas){
 
 			}
 			
-
 			if(this.fullScreen==true){
-				/*
-				if(window.innerHeight > window.innerWidth){
-					$("#game").width(window.innerWidth);
-				}else{
-					$("#game").width(window.innerWidth);
-				}
-				*/
+				
 			}
 		}
 		this.now=new Date;
@@ -707,15 +592,11 @@ function movieCanvas(canvas){
 			clearTimeout(myState.interval);
 			myState.interval = setInterval(function() { myState.draw(); }, myState.fps);
 		}
-		//document.getElementById("trace").innerHTML = this.myfps+":"+this.fps;
-		
-		//alert(thisFrameFPS - this.myfps);
 	}
 	canvas.addEventListener(this.eventType[0],function(e){
 
 		var mouse = myState.getMouse(e);
 		
-		//alert(e.touches[0].clientY + ":" + e.touches[0].clientX);
 		var mx;
 		var my;
 		try{
@@ -734,9 +615,8 @@ function movieCanvas(canvas){
 				if(hitTest(img[i].whoImg,{x:mx,y:my})){
 					if(hitTest(img[i],{x:mx,y:my})){
 						visible = (img[i].whoImg.parent==undefined) ? img[i].whoImg.visible : img[i].whoImg.adjustvisible;
-						//clickCallback = (img[i].whoImg.parent==undefined) ? img[i].whoImg.clickCallback : img[i].whoImg.clickCallback;
 						if(highestDepth<=img[i].whoImg.depth && visible!=false && img[i].whoImg.visible!=false){
-							//document.location = img[i].href;	
+
 						}
 					}
 				}
@@ -766,15 +646,8 @@ function movieCanvas(canvas){
 		}catch(e){}
 	},true);
 	canvas.addEventListener(this.eventType[1],function(e){
-		//alert(trackX);
-		//var mouse = myState.getMouse(e,1);
-		
-		
-		var mx = trackX;//(mouse.x==0) ? e.touches[0].pageX : mouse.x;
-		var my = trackY;//(mouse.y==0) ? e.touches[0].pageY : mouse.y;
-		
-		
-		
+		var mx = trackX;
+		var my = trackY;
 		var img = myState.img;
 		var highestDepth = 0;
 		var indexHighestDepth = 0;
@@ -783,7 +656,6 @@ function movieCanvas(canvas){
 				if(hitTest(img[i].whoImg,{x:mx,y:my})){
 					if(hitTest(img[i],{x:mx,y:my})){
 						visible = (img[i].whoImg.parent==undefined) ? img[i].whoImg.visible : img[i].whoImg.adjustvisible;
-						//clickCallback = (img[i].whoImg.parent==undefined) ? img[i].whoImg.clickCallback : img[i].whoImg.clickCallback;
 						if(highestDepth<=img[i].whoImg.depth && visible!=false && img[i].whoImg.visible!=false){
 							
 							if(img[i].target=="_blank"){
@@ -843,12 +715,7 @@ function movieCanvas(canvas){
 				if(hitTest(img[i].whoImg,{x:mx,y:my})){
 					if(hitTest(img[i],{x:mx,y:my})){
 						visible = (img[i].whoImg.parent==undefined) ? img[i].whoImg.visible : img[i].whoImg.adjustvisible;
-						//clickCallback = (img[i].whoImg.parent==undefined) ? img[i].whoImg.clickCallback : img[i].whoImg.clickCallback;
 						if(highestDepth<=img[i].whoImg.depth && visible!=false && img[i].whoImg.visible!=false){
-							//myState.img[i].hover = true;
-							//myState.img[i].visible=true;
-							//myState.img[i].alpha = 100;
-							//myState.img[i].hover = true;
 							indexHighestDepth = i;
 							for(lc=0;lc<img.length;lc++){
 								if(img[i].conn==img[lc].conn){
@@ -863,35 +730,25 @@ function movieCanvas(canvas){
 									}
 								}
 							}
-							
-							//document.getElementById('game').style.cursor = "pointer";
 						}
 						if(myState.img[i].hover==true){
 							try{
-								//myState.img[i].visible=false;
-								//img[i].outCallback();
-								//if(img[i].elementType!="text") document.getElementById('game').style.cursor = "default";
-								//if(img[i].elementType!="text") myState.setCursor();
+								
 							}catch(e){}
 						}
 					}else{
 						if(myState.img[i].hover==false){
 							try{
-								//myState.img[i].visible=false;
 								for(lc=0;lc<img.length;lc++){
 									if(img[i].conn==img[lc].conn){
 										myState.img[lc].visible=false;
 										document.getElementById('game').style.cursor = "default";
 									}
 								}
-								//img[i].outCallback();
-								//if(img[i].elementType!="text") document.getElementById('game').style.cursor = "default";
-								//if(img[i].elementType!="text") myState.setCursor();
 							}catch(e){}
 						}
 						myState.img[i].hover = false;
 					}
-					//alert(1);
 				}
 			}else{
 				if(hitTest(img[i],{x:mx,y:my})){
@@ -923,7 +780,6 @@ function movieCanvas(canvas){
 						try{
 							img[i].outCallback();
 							if(img[i].elementType!="text") document.getElementById('game').style.cursor = "default";
-							//if(img[i].elementType!="text") myState.setCursor();
 						}catch(e){}
 					}
 					myState.img[i].hover = false;
@@ -963,13 +819,7 @@ function movieCanvas(canvas){
 		}	
 		return index;
 	}
-	
-
-	
-	
 	myState.interval = setInterval(function() { myState.draw(); }, myState.fps);
-	
-	
 }	
 movieCanvas.prototype.getNextHighestDepth = function(){
 	var img = this.img;
@@ -980,7 +830,6 @@ movieCanvas.prototype.getNextHighestDepth = function(){
 			highest = img[i].depth;
 		}
 	}
-
 	return highest+1;
 }
 movieCanvas.prototype.lastRecordedX = 0;
@@ -1014,7 +863,6 @@ movieCanvas.prototype.getMouse = function(e,test) {
 		this.lastRecordedX = mx;	
 		this.lastRecordedY = my;	
 	}
-	//document.getElementById("trace").innerHTML = "X:"+mx+" / Y:"+my;
 	return {x: mx, y: my};
 }
 movieCanvas.prototype.addChild = function(a) {
@@ -1093,14 +941,9 @@ movieCanvas.prototype.clear = function() {
 }
 
 movieCanvas.prototype.multiFillText = function(text, x, y, lineHeight, fitWidth, fontSize, font, color, align, height, autoFit,valign,shadowColor,shadowOffsetX,shadowOffsetY,shadowBlur) {
-	//if(shadowColor!=undefined)alert(shadowColor);
 	var linkHref = [];
 	var linkTarget = [];
 	text.replace(/(<a (href=\')([^\'']*)(\') (target=\')([^\'']*)(\')>([^\'']*)<\/a>)/g,function() {
-	//text.replace(/(<a href='([^"]+)' target='([^"]+)'>([^<]+)<\/a>)/g,function() {
-		// for target value alert(arguments[6]);
-		// for href value alert(arguments[3]);
-		//alert(arguments[3]);
 		linkHref.push(arguments[3]);
 		linkTarget.push(arguments[6]);
 		text = text.replace(arguments[0],"¡"+arguments[8]+"·"); 
@@ -1110,11 +953,6 @@ movieCanvas.prototype.multiFillText = function(text, x, y, lineHeight, fitWidth,
 	do{
 		x = 0;
 		y = lineHeight+100;
-		//alert(text);
-		
-		//$url = preg_match('/<a href="(.+)">/', $text, $match);
-
-		//alert(text.match(/<a href='(.+)'>/));
 		this.textFillCounter++;
 		var buffer = document.createElement("canvas");
 		var ctx = buffer.getContext('2d');
@@ -1131,10 +969,6 @@ movieCanvas.prototype.multiFillText = function(text, x, y, lineHeight, fitWidth,
 		if(color==undefined) color = "#000000";
 		if(align==undefined) align = "left";
 		
-		
-		
-		
-		
 		ctx.font = fontSize+"px "+font;
 		ctx.textAlign = align;
 		ctx.fillStyle = color;
@@ -1143,8 +977,6 @@ movieCanvas.prototype.multiFillText = function(text, x, y, lineHeight, fitWidth,
 		if(shadowOffsetY!=undefined) ctx.shadowOffsetY = shadowOffsetX;
 		if(shadowOffsetX!=undefined) ctx.shadowOffsetX = shadowOffsetY;
 		if(shadowBlur!=undefined) ctx.shadowBlur = shadowBlur;
-		//ctx.strokeStyle = "#ffffff";
-		
 		
 		var draw = x !== null && y !== null;
 		var cutOff = 210;
@@ -1155,29 +987,19 @@ movieCanvas.prototype.multiFillText = function(text, x, y, lineHeight, fitWidth,
 		text = text.replace(/\\\\n/g, "&#92;n");
 		text = text.replace(/\\n/g, "\n");
 		text = text.replace(/&#92;n/g, "\\n");
-		//text = text.replace(/(\r\n|\n\r|\r|\n)/g, "\n");
+
 		sections = text.split("\n");
-		//alert(escape(sections));
+		
 		var i, str, wordWidth, words, currentLine = 0,
 			maxHeight = 0,
 			maxWidth = 0,drawLine=0;;
 	
 		var printNextLine = function(str,ctx) {
-			
-			//text.replace(/(<a (href=\')([^\'']*)(\') (target=\')([^\'']*)(\')>([^\'']*)<\/a>)/g,function() {
-			//text.replace(/(<a href='([^"]+)' target='([^"]+)'>([^<]+)<\/a>)/g,function() {
-				// for target value alert(arguments[6]);
-				// for href value alert(arguments[3]);
-				//alert(arguments[3]);
-				//linkHref.push(arguments[3]);
-				str = str.replace(/(\¡)/g,'').replace(/(\·)/g,''); 
-			//});
+			str = str.replace(/(\¡)/g,'').replace(/(\·)/g,''); 
 			if(draw){ 
 				adjustx = (align=="center") ? (x+(fitWidth/2)) : x;
 				ctx.fillText(str, adjustx, y + (lineHeight * currentLine)+adjustY);
-				//if(str!="") drawLine++;
 			}
-			//alert(str);
 			currentLine++;
 			wordWidth = ctx.measureText(str).width;
 			if (wordWidth > maxWidth) {
@@ -1185,7 +1007,6 @@ movieCanvas.prototype.multiFillText = function(text, x, y, lineHeight, fitWidth,
 			}
 		};
 		var linkFound = 0;
-		//alert(text);
 		var linkComFound = 0;
 		for (i = 0; i < sections.length; i++) {
 			words = sections[i].split(' ');
@@ -1198,14 +1019,9 @@ movieCanvas.prototype.multiFillText = function(text, x, y, lineHeight, fitWidth,
 			var linkCom = 0;
 			
 			while (words.length > 0 && index <= words.length) {
-	
-				
 				str = words.slice(0, index).join(' ');
-				
 				wordWidth = ctx.measureText(str).width;
 				perWord = words[index-1];
-				//var linkL = new RegExp(linkWord, 'gi');
-				
 				perWordEnd = words[index-2];
 				
 				if(linkDetect==true){
@@ -1220,54 +1036,36 @@ movieCanvas.prototype.multiFillText = function(text, x, y, lineHeight, fitWidth,
 				var myRegexp = /\¡/;
 				if (wordWidth > fitWidth) {
 					//Cancel pushing link box, because word is not fit in current box
-					//alert(perWord+":"+str);
 				}else{
 					var linkMatch = myRegexp.exec(perWord);
-					//alert(perWord+" | "+str);
-					// Start of link <A href=""....
-					
-					
 					
 					if(myRegexp.test(perWord)){
-						
-						//alert("|"+words.slice(0, index-1).join(' ')+' '+"|");
 						linkWidth = "";
 						//linkCreate
 						linkbuffer = true;
 						linkComFound++;
 						linkCom = linkComFound+":"+this.textFillCounter;
-						//alert(linkCom);
 						if(words[index-2]==""){
 							tmpX = ctx.measureText(words.slice(0, index-2).join(' ')+' ').width;
-							//alert(words.slice(0, index-2).join(' ')+":");
 						}else{
 							if(words.slice(0, index-1).join(' ')==""){
 								tmpX = ctx.measureText(words.slice(0, index-1).join(' ')+'').width;
 							}else{
 								tmpX = ctx.measureText(words.slice(0, index-1).join(' ')+' ').width;
 							}
-							//alert(words.slice(0, index-1).join(' ')+":");
 						}
-						//ctx.font = "Italic "+fontSize+"px "+font;
-						//this.linkCreate.push({x:ctx.measureText(words.slice(0, index-1).join(' ')).width,y:lineHeight * currentLine});
 						linkDetect = true;
-						
 					}
 					
 					// If link are not terminated and in new lines.. add new click Box
 					if(linkCon==true && index==1){
-						//linkComFound++;
 						linkCom = linkComFound+":"+this.textFillCounter;
 						tmpX = ctx.measureText(words.slice(0, index-1).join(' ')).width;
 						
 						tmpY = lineHeight * currentLine;
-						//this.linkCreate.push({x:ctx.measureText(words.slice(0, index-1).join(' ')).width,y:lineHeight * currentLine});
-						
 						linkDetect = true;
 					}
 					// Copy the word to get the width of link box
-					
-					
 					
 					// If we are on the end of link -> </a>
 				
@@ -1307,8 +1105,7 @@ movieCanvas.prototype.multiFillText = function(text, x, y, lineHeight, fitWidth,
 
 						words.unshift(str.substr(50,100));
 						str = str.substr(0,50);
-						
-						//alert(1);
+
 					} else {
 						
 						str = words.slice(0, index - 1).join(' ');
@@ -1316,12 +1113,9 @@ movieCanvas.prototype.multiFillText = function(text, x, y, lineHeight, fitWidth,
 					}
 					//If we are on the last word, get the final width of our link box..
 					if(linkDetect==true){
-						//alert(str);
-						//alert(str+"1");
+
 						tmpY = lineHeight * currentLine;
 						this.linkCreate.push({x:tmpX,y:tmpY,w:ctx.measureText(linkWidth.replace(/(\¡)/g,'').replace(/(\·)/g,'')).width,id:this.textFillCounter,href:linkHref[linkFound],target:linkTarget[linkFound],conn:linkCom});
-						//linkFound++;
-						//this.linkCreate[this.linkCreate.length-1].w = ctx.measureText(linkWidth).width;
 						linkWidth = "";
 						linkDetect = false;
 						linkCon = true;
@@ -1338,25 +1132,16 @@ movieCanvas.prototype.multiFillText = function(text, x, y, lineHeight, fitWidth,
 
 					index++;
 				}
-
-			
-				//var linkR = new RegExp(
-				//alert(words[index-2]+ ":"+str);
 				wordIndex++;
 				
 			}
 	
 			// The left over words on the last line
 			if (index > 0) {
-				//alert(1);
-				
 				if(linkDetect==true){
-						//alert(linkWidth+words[index-2]);
-						//alert("|"+words[index-2].replace(/(\¡)/g,'').replace(/(\·)/g,'')+"|");
 						tmpY = lineHeight * currentLine;
 						this.linkCreate.push({x:tmpX,y:tmpY,w:ctx.measureText(linkWidth+words[index-2].replace(/(\¡)/g,'').replace(/(\·)/g,'')).width,id:this.textFillCounter,href:linkHref[linkFound],target:linkTarget[linkFound],conn:linkCom});
 						linkFound++;
-						//this.linkCreate[this.linkCreate.length-1].w = ctx.measureText(linkWidth).width;
 						linkWidth = "";
 						linkDetect = false;
 						linkCon = true;
@@ -1369,14 +1154,7 @@ movieCanvas.prototype.multiFillText = function(text, x, y, lineHeight, fitWidth,
 		}
 	
 		maxHeight = lineHeight * (currentLine);
-	
-		//if (DEBUG) {
-			
-			//ctx.strokeRect(x, y, maxWidth, maxHeight);
-		//}
-		//buffer.testwin = drawLine;
 		buffer.maxHeight = maxHeight;
-		//alert(maxHeight+":"+origHeight);
 		
 		if((maxHeight)<=origHeight){
 			
@@ -1397,25 +1175,12 @@ movieCanvas.prototype.multiFillText = function(text, x, y, lineHeight, fitWidth,
 			
 		}else{
 			height = origHeight;
-			//alert(fontSize+">>>"+(maxHeight-100)+":"+origHeight);
-			//autoFit=true;
 			fontSize--;	
 			lineHeight = fontSize+(fontSize/5);
 		}
 		
 	}while(autoFit==true);
-	//ctx.restore();
-	/*
-	var links = [];
-	linkStr = text;
-	linkStr.replace(/[^<]*(<a href='([^"]+)' target='([^"]+)'>([^<]+)<\/a>)/g,function() {
-		links.push(Array().slice.call(arguments, 1, 5));
-		
-	});
-	if(links.length!=0){
-		this.linkList.push({img:buffer,href:links[0][1],target:links[0][2],content:links[0][3]});
-	}
-	*/
+	
 	// If we saw link detect.. copy the buffer..
 	if(linkbuffer==true){
 		
@@ -1426,12 +1191,5 @@ movieCanvas.prototype.multiFillText = function(text, x, y, lineHeight, fitWidth,
 			
 		}
 	}
-	//if(text=="Goal Title"){ 
-		//this.linkList.push(buffer);
-	//}
-	//var imgData = ctx.getImageData(0,0,10,10);
-	//ctx.drawImage(imgData, x, y,0,0,10,10);
-	//ctx.fillText(maxHeight+" "+origHeight,x,y+20);
-	//document.body.appendChild(buffer);
 	return buffer;
 };
