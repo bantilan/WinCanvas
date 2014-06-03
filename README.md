@@ -8,3 +8,10 @@ We are still developing the codes, no need for license this time.
 
 ## Documentation
 Our site is still under construction, Example codes will posted on our website (http://wincanvas.com)
+
+## Getting Started
+Code use to start WinCanvas in your HTML5 app.
+
+`
+var myGame = new winCanvas();
+`
