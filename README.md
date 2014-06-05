@@ -14,4 +14,5 @@ Code use to start WinCanvas in your HTML5 app.
 
 `
 var myGame = new winCanvas();
+myGame.start();
 `
